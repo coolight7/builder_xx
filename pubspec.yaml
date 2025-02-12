@@ -29,12 +29,12 @@ dependencies:
   flutter_screenutil: ^5.9.3 # 屏幕大小适应
   animated_toggle_switch: ^0.8.4 # 选择
   text_scroll: ^0.2.0 # 文字跑马灯
-  flutter_easyloading:
-    git:
-      url: https://github.com/coolight7/flutter_easyloading
   util_xx: ^0.2.2
   flutter_util_xx: 
   string_util_xx: ^0.2.2
+  flutter_easyloading:
+    git:
+      url: https://github.com/coolight7/flutter_easyloading
 
 dev_dependencies:
   flutter_test:
