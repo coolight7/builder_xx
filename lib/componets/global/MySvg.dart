@@ -78,6 +78,7 @@ class MySvgNames_e {
       link = "link",
       love_d = "love_d",
       love_l = "love_l",
+      language = "language",
       menu = "menu",
       menuLeft_d = "menuLeft_d",
       menuLeft_l = "menuLeft_l",
