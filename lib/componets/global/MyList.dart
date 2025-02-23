@@ -921,6 +921,10 @@ class MyListBase<T> extends StatelessWidget {
     return null;
   }
 
+  Widget? buildFooter() {
+    return null;
+  }
+
   Widget? buildEmpty() {
     return null;
   }
@@ -1384,6 +1388,7 @@ class MyListBase<T> extends StatelessWidget {
   Widget buildBoxEmpty(EdgeInsets listPadding) {
     // 空列表是显示
     final header = buildHeader();
+    final footer = buildFooter();
     final empty = buildEmpty();
     return buildReflushBase(
       childBuilder: (physics, scrollCtrl) => ListView(
@@ -1397,6 +1402,7 @@ class MyListBase<T> extends StatelessWidget {
         children: [
           if (null != header) header,
           (null != empty) ? empty : MyTextCross.buildDefEmpty(),
+          if (null != footer) footer,
         ],
       ),
     );
@@ -1411,6 +1417,7 @@ class MyListBase<T> extends StatelessWidget {
         padding: listPadding,
         shrinkWrap: shrinkWrap,
         header: buildHeader(),
+        footer: buildFooter(),
       ),
     );
   }
@@ -1427,6 +1434,7 @@ class MyListBase<T> extends StatelessWidget {
 
   Widget buildListBoxMain(EdgeInsets listPadding, int count) {
     final headerWidget = buildHeader();
+    final footerWiget = buildFooter();
     return buildReflushBase(
       childBuilder: (physics, scrollCtrl) {
         final style = createListBoxItemStyle(false);
@@ -1457,6 +1465,7 @@ class MyListBase<T> extends StatelessWidget {
                   itemExtent:
                       (isFixedSize) ? MyListBase.defListBoxItemHeight : null,
                   header: headerWidget,
+                  footer: footerWiget,
                   shrinkWrap: shrinkWrap,
                   scrollController: scrollCtrl,
                   physics: physics,
@@ -1506,6 +1515,17 @@ class MyListBase<T> extends StatelessWidget {
                               itemBuilder: itemBuilder,
                             ),
                     ),
+                    if (null != footerWiget)
+                      SliverPadding(
+                        padding: EdgeInsets.only(
+                          left: listPadding.left,
+                          right: listPadding.right,
+                          bottom: listPadding.bottom,
+                        ),
+                        sliver: SliverToBoxAdapter(
+                          child: footerWiget,
+                        ),
+                      ),
                   ],
                 ),
         );
@@ -1517,6 +1537,7 @@ class MyListBase<T> extends StatelessWidget {
     final style = createGridBoxItemStyle(false);
     final selectStyle = createGridBoxItemStyle(true);
     final headerWidget = buildHeader();
+    final footerWieget = buildFooter();
     return buildReflushBase(
       childBuilder: (physics, scrollCtrl) {
         return GridViewObserver(
@@ -1562,6 +1583,17 @@ class MyListBase<T> extends StatelessWidget {
                   ),
                 ),
               ),
+              if (null != footerWieget)
+                SliverPadding(
+                  padding: EdgeInsets.only(
+                    left: listPadding.left,
+                    right: listPadding.right,
+                    bottom: listPadding.bottom,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: footerWieget,
+                  ),
+                ),
             ],
           ),
         );
@@ -1573,6 +1605,7 @@ class MyListBase<T> extends StatelessWidget {
     final style = createListBoxItemStyle(false);
     final selectStyle = createListBoxItemStyle(true);
     final headerWidget = buildHeader();
+    final footerWidget = buildFooter();
     return buildReflushBase(
       childBuilder: (physics, scrollCtrl) {
         return GridViewObserver(
@@ -1617,6 +1650,17 @@ class MyListBase<T> extends StatelessWidget {
                   ),
                 ),
               ),
+              if (null != footerWidget)
+                SliverPadding(
+                  padding: EdgeInsets.only(
+                    left: listPadding.left,
+                    right: listPadding.right,
+                    bottom: listPadding.bottom,
+                  ),
+                  sliver: SliverToBoxAdapter(
+                    child: footerWidget,
+                  ),
+                ),
             ],
           ),
         );
@@ -2659,6 +2703,7 @@ class MyList<T> extends MyListBase<T> {
 class MyListBaseWidget<T> extends MyListBase<T> {
   final Widget Function()? emptyBuilder;
   final Widget Function()? headerBuilder;
+  final Widget Function()? footerBuilder;
 
   /// 列表项信息
   final Widget Function(T item, int index) itemInfo;
@@ -2699,6 +2744,7 @@ class MyListBaseWidget<T> extends MyListBase<T> {
     super.enableDrop,
     this.emptyBuilder,
     this.headerBuilder,
+    this.footerBuilder,
     this.selected,
     this.onItemCheck,
     this.onItemTap,
@@ -2739,6 +2785,11 @@ class MyListBaseWidget<T> extends MyListBase<T> {
   @override
   Widget? buildHeader() {
     return headerBuilder?.call();
+  }
+
+  @override
+  Widget? buildFooter() {
+    return footerBuilder?.call();
   }
 
   @override
@@ -2834,7 +2885,7 @@ class MyListWidget<T> extends MyList<T> {
 
   final Widget Function(bool isEdit)? ctrlBarBuilder;
   final Widget Function()? emptyBuilder;
-  final Widget? Function()? headerBuilder;
+  final Widget? Function()? headerBuilder, footerBuilder;
 
   MyListWidget(
     super.controller, {
@@ -2851,6 +2902,7 @@ class MyListWidget<T> extends MyList<T> {
     super.showBtnTipCount,
     super.saveIsLoading,
     this.headerBuilder,
+    this.footerBuilder,
     this.emptyBuilder,
     this.itemLeading,
     this.itemTags,
@@ -2904,6 +2956,11 @@ class MyListWidget<T> extends MyList<T> {
   @override
   Widget? buildHeader() {
     return headerBuilder?.call();
+  }
+
+  @override
+  Widget? buildFooter() {
+    return footerBuilder?.call();
   }
 
   @override

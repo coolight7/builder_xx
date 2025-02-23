@@ -63,7 +63,7 @@ class MyShimmerList extends StatelessWidget {
   final ScrollPhysics? physics;
   final int itemCount;
   final EdgeInsetsGeometry? padding;
-  final Widget? header;
+  final Widget? header, footer;
   final bool shrinkWrap;
 
   const MyShimmerList({
@@ -72,6 +72,7 @@ class MyShimmerList extends StatelessWidget {
     this.physics,
     this.padding,
     this.header,
+    this.footer,
     this.shrinkWrap = false,
   });
 
@@ -90,6 +91,7 @@ class MyShimmerList extends StatelessWidget {
         children: [
           if (null != header) header!,
           ...List.filled(itemCount, const _BuildMyShimmerListItem()),
+          if (null != footer) footer!,
         ],
       ),
     );

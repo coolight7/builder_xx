@@ -91,7 +91,7 @@ class MyImmersionModel_c {
       case MyImmersionModel_e.HideAndLock:
         return """• 播放页面一段时间不操作后隐藏部分按钮。
 • 并锁定播放页面底部控制栏，上拉页面后显示。
-• 使用鼠标时效果等同 [隐藏]""";
+• 使用鼠标时效果等同『隐藏』""";
     }
   }
 
