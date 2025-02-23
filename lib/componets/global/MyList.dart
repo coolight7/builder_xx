@@ -1947,6 +1947,89 @@ class MyList<T> extends MyListBase<T> {
                 }
               : null,
         ),
+      if (mylist.enableDrop)
+        MySettingListItemData_c(
+          leaderSvgName: MySvgNames_e.top,
+          infoMain: "移动到列表顶部",
+          infoCross: "欲穷千里目，更上一层楼",
+          onTap: (p0, p1, p2) {
+            MyRoute_c.back();
+            mylist.controller.ensureEditOpen();
+            final checklist = mylist.controller.checkList;
+            if (checklist.isEmpty) {
+              MyPopup.showEasyToast("请选择要移动的歌曲");
+              return;
+            }
+            MyListController.autoSave(
+              mylist.controller,
+              () {
+                // 先收集选中歌曲，保持选中顺序
+                final selectList = <T>[];
+                for (final item in checklist) {
+                  selectList.add(mylist.controller.list[item]);
+                }
+                // 重排序，避免后续修改影响了 checklist 中 index 的指向，然后移除
+                checklist.sort((x, y) {
+                  if (x < y) {
+                    return -1;
+                  } else if (x > y) {
+                    return 1;
+                  } else {
+                    return 0;
+                  }
+                });
+                for (var i = checklist.length; i-- > 0;) {
+                  mylist.controller.list.removeAt(checklist[i]);
+                }
+                // 重新添加进去
+                selectList.addAll(mylist.controller.list);
+                mylist.controller.update_list(selectList, doUpdate: false);
+                return MyListCtrlBehavior_e.SaveAndUpdate;
+              },
+            );
+          },
+        ),
+      if (mylist.enableDrop)
+        MySettingListItemData_c(
+          leaderSvgName: MySvgNames_e.bottom,
+          infoMain: "移动到列表底部",
+          infoCross: "飞流直下三千尺，疑是银河落九天",
+          onTap: (p0, p1, p2) {
+            MyRoute_c.back();
+            mylist.controller.ensureEditOpen();
+            final checklist = mylist.controller.checkList;
+            if (checklist.isEmpty) {
+              MyPopup.showEasyToast("请选择要移动的歌曲");
+              return;
+            }
+            MyListController.autoSave(
+              mylist.controller,
+              () {
+                // 先收集选中歌曲，保持选中顺序
+                final selectList = <T>[];
+                for (final item in checklist) {
+                  selectList.add(mylist.controller.list[item]);
+                }
+                // 重排序，避免后续修改影响了 checklist 中 index 的指向，然后移除
+                checklist.sort((x, y) {
+                  if (x < y) {
+                    return -1;
+                  } else if (x > y) {
+                    return 1;
+                  } else {
+                    return 0;
+                  }
+                });
+                for (var i = checklist.length; i-- > 0;) {
+                  mylist.controller.list.removeAt(checklist[i]);
+                }
+                // 重新添加进去
+                mylist.controller.list.addAll(selectList);
+                return MyListCtrlBehavior_e.SaveAndUpdate;
+              },
+            );
+          },
+        ),
     ];
   }
 
