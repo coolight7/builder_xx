@@ -208,6 +208,7 @@ class MySvgImgName_e {
       key = "key",
       edit = "edit",
       exit = "exit",
+      filter = "filter",
       fullScreenExit = "fullScreenExit",
       fullScreenInto = "fullScreenInto",
       file = "file",
