@@ -975,7 +975,7 @@ class MyListBase<T> extends StatelessWidget {
       final onTap = use_onItemMenu.onTap;
       if (null != onTap) {
         final (title, depict, relist) = await onTap.call(item, index, [
-          if (enableDrop && enableCheck && index != 0)
+          if (enableDrop && index != 0)
             MySettingListItemData_c(
               leaderSvgName: MySvgNames_e.top,
               infoMain: "移动到列表顶部",
@@ -995,9 +995,7 @@ class MyListBase<T> extends StatelessWidget {
                 );
               },
             ),
-          if (enableDrop &&
-              enableCheck &&
-              index != (controller.list.length - 1))
+          if (enableDrop && index != (controller.list.length - 1))
             MySettingListItemData_c(
               leaderSvgName: MySvgNames_e.bottom,
               infoMain: "移动到列表底部",
@@ -1949,7 +1947,7 @@ class MyList<T> extends MyListBase<T> {
                 }
               : null,
         ),
-      if (mylist.enableDrop)
+      if (mylist.enableDrop && mylist.enableCheck)
         MySettingListItemData_c(
           leaderSvgName: MySvgNames_e.top,
           infoMain: "移动到列表顶部",
@@ -1991,7 +1989,7 @@ class MyList<T> extends MyListBase<T> {
             );
           },
         ),
-      if (mylist.enableDrop)
+      if (mylist.enableDrop && mylist.enableCheck)
         MySettingListItemData_c(
           leaderSvgName: MySvgNames_e.bottom,
           infoMain: "移动到列表底部",
