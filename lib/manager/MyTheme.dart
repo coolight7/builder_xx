@@ -306,14 +306,20 @@ class MyTheme_c extends ThemeExtension<MyTheme_c> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: MyColors_e.write_xxBlue,
-        iconTheme: const IconThemeData(color: MyColors_e.grey_lite),
-        systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
-          statusBarColor: Colors.transparent,
-          systemNavigationBarColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: MyColors_e.black_liteX),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: MyColors_e.write.withOpacity(0),
+          statusBarBrightness: Brightness.light,
+          statusBarIconBrightness: Brightness.dark,
+          systemStatusBarContrastEnforced: false,
+          systemNavigationBarColor: MyColors_e.write.withOpacity(0),
+          systemNavigationBarDividerColor: MyColors_e.write.withOpacity(0),
+          systemNavigationBarContrastEnforced: false,
+          systemNavigationBarIconBrightness: Brightness.dark,
         ),
       ),
       iconTheme: const IconThemeData(
-        color: MyColors_e.grey_lite,
+        color: MyColors_e.black_liteX,
       ),
       bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: MyColors_e.write_xxBlue,
@@ -620,10 +626,16 @@ class MyTheme_c extends ThemeExtension<MyTheme_c> {
         centerTitle: true,
         elevation: 0,
         backgroundColor: MyColors_e.black_x,
-        iconTheme: const IconThemeData(color: MyColors_e.grey_lite),
-        systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
-          statusBarColor: Colors.transparent,
-          systemNavigationBarColor: Colors.transparent,
+        iconTheme: const IconThemeData(color: MyColors_e.write_lite),
+        systemOverlayStyle: SystemUiOverlayStyle(
+          statusBarColor: MyColors_e.black_x.withOpacity(0),
+          statusBarBrightness: Brightness.dark,
+          statusBarIconBrightness: Brightness.light,
+          systemStatusBarContrastEnforced: false,
+          systemNavigationBarColor: MyColors_e.black_x.withOpacity(0),
+          systemNavigationBarDividerColor: MyColors_e.black_x.withOpacity(0),
+          systemNavigationBarContrastEnforced: false,
+          systemNavigationBarIconBrightness: Brightness.light,
         ),
       ),
       textSelectionTheme: const TextSelectionThemeData(

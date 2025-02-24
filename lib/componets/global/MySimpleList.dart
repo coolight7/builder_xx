@@ -375,6 +375,7 @@ class MySettingListItemData_c {
     String? leaderSvgName,
     String? leaderSvgImg,
     String? infoCross,
+    dynamic routeArguments,
   }) {
     return MySettingListItemData_c(
       leaderSvgName: leaderSvgName,
@@ -383,13 +384,15 @@ class MySettingListItemData_c {
       infoCross: infoCross,
       action: const MySimpleBtn_pointRight(),
       onTap: (p0, p1, p2) {
-        MyRoute_c.toNamed(routeName);
+        MyRoute_c.toNamed(routeName, arguments: routeArguments);
       },
     );
   }
 }
 
 class MySettingList extends StatelessWidget {
+  static const defaultLeadSvgSize = 120;
+
   final EdgeInsetsGeometry? padding;
   final MySimpleListController<MySettingListItemData_c> controller;
   final ScrollPhysics? physics;
@@ -482,7 +485,7 @@ class MySettingList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = MyGlobalStoreBase.theme_s.mytheme;
-    final size = 120.r;
+    final size = defaultLeadSvgSize.r;
     final svgImgStyle = BoxDecoration(
       color: (inContent
               ? theme.contentDecoration.svgInContentBackgroundColor
