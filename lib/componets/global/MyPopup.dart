@@ -692,13 +692,14 @@ class MyPopup {
     MySize_c? Function(double maxHeight)? sizeBuilder,
     Color? backgroundColor,
     bool enableDismissible = true, // 允许用户点击背景/拖动等方式关闭关闭
+    bool enableCloseByNotBtn = true, // 允许按钮以外的方式关闭, 启用 [enableDismissible] 才有效
     String textConfirm = "确定",
     void Function()? onConfirm,
     Future<void> Function()? onConfirmAsync,
   }) async {
     return showBottomSheetBase(
       backgroundColor: backgroundColor,
-      enableDismissible: enableDismissible,
+      enableDismissible: enableDismissible && enableCloseByNotBtn,
       sizeBuilder: sizeBuilder,
       childBuilder: (context) {
         final theme = MyGlobalStoreBase.theme_s.mytheme;

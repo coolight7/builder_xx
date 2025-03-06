@@ -610,7 +610,7 @@ class MyTheme_c extends ThemeExtension<MyTheme_c> {
           musicWarpStyle: const MyThemeMusicWarp_c.light(),
           progressStyle: MyThemeProgress_c.defLight(),
           switchDecoration: const MyThemeSwitchDecoration_c(),
-          textTitleBackgroundColor: const Color.fromRGBO(220, 255, 200, 0.2),
+          textTitleBackgroundColor: const Color.fromRGBO(255, 240, 215, 0.5),
         ),
       ],
     );

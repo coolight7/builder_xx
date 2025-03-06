@@ -39,7 +39,7 @@ class MyThemeStoreBase extends MyStore {
   Timer? followTimeTimer;
 
   /// 主题切换使用模式
-  MyThemeUseModel_e useModel = MyThemeUseModel_e.followSystem;
+  MyThemeUseModel_e useModel = MyThemeUseModel_e.Night;
 
   /// 白昼模式使用的主题
   MyThemeIndex_e lightIndex = MyThemeIndex_e.mimicryLight;

@@ -35,6 +35,9 @@ class MyNetStateCode_e {
       InsufficientCredit = 4019, // 信用评估较低，不可使用
       NotAllowError = 4020, // 不允许的操作
       ExpireError = 4021, // 已过期
+      InvalidError = 4022, // 无效
+      WaitClientOperate = 4023, // 需要等待客户端进一步操作
+      Deprecated = 4024, // 废弃的api，建议更新
       FaildCustom = 4777, // 客户端错误，并附带自定义提示
       FaildTag = 4900,
       Exception = 5000, // 服务器错误
@@ -63,6 +66,8 @@ class MyNetStateCode_e {
 /// 错误提示信息
 class MyErrTipStr_c {
   static final _instance = MyErrTipStr_c(doInit: true);
+
+  static const defUnknownClientError = "未知错误，请更新拟声查看";
 
   static MyErrTipStr_c to() {
     return MyErrTipStr_c._instance;
@@ -94,6 +99,9 @@ class MyErrTipStr_c {
       errTip[MyNetStateCode_e.InsufficientCredit] = "您的信用评估较低，被拒绝";
       errTip[MyNetStateCode_e.NotAllowError] = "不允许该操作";
       errTip[MyNetStateCode_e.ExpireError] = "已过期";
+      errTip[MyNetStateCode_e.InvalidError] = "无效操作";
+      errTip[MyNetStateCode_e.WaitClientOperate] = "需要等待进一步操作";
+      errTip[MyNetStateCode_e.Deprecated] = "该服务已调整，请更新拟声";
       errTip[MyNetStateCode_e.Exception] = "服务器错误，可能正在更新维护";
       errTip[MyNetStateCode_e.ExtendException] = "拟声之外的外部服务错误";
       errTip[MyNetStateCode_e.NetWorkError] = "网络状态错误";
@@ -141,7 +149,12 @@ class MyErrTipStr_c {
   /// *  否则使用undefined填充，
   /// *  若undefined对应的tip也不存在，则返回空字符串
   String mustGet(int in_num, String respTip) {
-    return tryGet(in_num, respTip) ?? "";
+    var result = tryGet(in_num, respTip);
+    if (null == result && in_num / 1000 > 0) {
+      // 自定义的状态码
+      return defUnknownClientError;
+    }
+    return result ?? "";
   }
 }
 
@@ -299,6 +312,8 @@ class MyNetHeaderName_e {
       Origin = "Origin",
       UserAgent = "User-Agent",
       Cookie = "Cookie",
+      ApiVersion = "ApiVersion",
+      AcceptLanguage = "Accept-Language",
       Authorization = "Authorization";
 
   static const String Cos_md5 = "x-cos-meta-md5";
@@ -341,21 +356,28 @@ class MyNetClient_c {
 
   final libdio.Dio myDio, dio;
 
+  late String def_apiVersion;
   String jwtUser = ""; // jwt_user令牌
-  String def_myApi_prefix;
-  String? def_myApi_referer;
-  String? def_myApi_origin;
-  String? def_myApi_host;
-  String? def_myApi_userAgent;
+  final String def_langs;
+  final String def_myApi_prefix;
+  final String? def_myApi_referer;
+  final String? def_myApi_origin;
+  final String? def_myApi_host;
+  final String? def_myApi_userAgant;
+  final String? def_myApi_clientInfo;
 
   MyNetClient_c({
     required this.def_myApi_prefix,
+    required this.def_langs,
+    required int apiVersion,
     this.def_myApi_referer,
     this.def_myApi_origin,
     this.def_myApi_host,
-    this.def_myApi_userAgent,
+    this.def_myApi_userAgant,
+    this.def_myApi_clientInfo,
   })  : myDio = libdio.Dio(myDioOptions),
         dio = libdio.Dio(dioOptions) {
+    def_apiVersion = apiVersion.toString();
     dio.httpClientAdapter = IOHttpClientAdapter(
       createHttpClient: () {
         final client =
@@ -452,8 +474,14 @@ class MyNetClient_c {
         // 添加jwt
         options.headers[MyNetHeaderName_e.JWTNAME_accessToken] = jwtUser;
         // 添加 客户端信息
-        options.headers[MyNetHeaderName_e.UserAgent] = "bool.run-App-Musicxx";
-        options.headers[MyNetHeaderName_e.ClientInfo] = def_myApi_userAgent;
+        options.headers[MyNetHeaderName_e.ApiVersion] = def_apiVersion;
+        options.headers[MyNetHeaderName_e.AcceptLanguage] = def_langs;
+        if (null != def_myApi_userAgant) {
+          options.headers[MyNetHeaderName_e.UserAgent] = def_myApi_userAgant;
+        }
+        if (null != def_myApi_clientInfo) {
+          options.headers[MyNetHeaderName_e.ClientInfo] = def_myApi_clientInfo;
+        }
         return handler.next(options); //continue
       },
       onResponse: ((resp, handler) async {
