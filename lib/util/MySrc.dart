@@ -12,6 +12,7 @@ enum MySrcType_e {
   MyLink,
   MyId,
   MyCos,
+  Lumenxx,
   Local,
   LocalCache,
   LocalCacheId,
@@ -27,6 +28,7 @@ class MySrcTypeStr_e {
       BaiduPanStr = "baiduPan",
       WebdavStr = "webdav",
       AssetStr = "assest",
+      LumenxxStr = "Lumenxx",
       LocalStr = "local",
       LocalCacheStr = "localCache",
       LocalCacheIdStr = "LocalCacheId",
@@ -41,6 +43,7 @@ class MySrcTypeStr_e {
     UrlLinkStr: MySrcType_e.UrlLink,
     AliDriveStr: MySrcType_e.AliDrive,
     BaiduPanStr: MySrcType_e.BaiduPan,
+    LumenxxStr: MySrcType_e.Lumenxx,
     LocalStr: MySrcType_e.Local,
     LocalCacheStr: MySrcType_e.LocalCache,
     LocalCacheIdStr: MySrcType_e.LocalCacheId,
@@ -65,6 +68,8 @@ class MySrcTypeStr_e {
         return BaiduPanStr;
       case MySrcType_e.Webdav:
         return WebdavStr;
+      case MySrcType_e.Lumenxx:
+        return LumenxxStr;
       case MySrcType_e.Local:
         return LocalStr;
       case MySrcType_e.LocalCache:
