@@ -584,7 +584,7 @@ enum MyThemeWindowBackgroundStyle_e {
 
 class MyThemeWindowBackgroundStyle_c {
   static bool isSupport() {
-    return Platformxx_c.isDesktop;
+    return (Platformxx_c.isWindows || Platformxx_c.isMacOS);
   }
 
   static int toInt(MyThemeWindowBackgroundStyle_e type) {
